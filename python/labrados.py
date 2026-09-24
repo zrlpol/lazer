@@ -40,7 +40,10 @@ def poly_to_ar(v: poly_t,outtype="int64"):
 
 def polyvec_to_ar(v: polyvec_t,outtype="int64"):
     pvec=ffi.new("int64_t []",v.ring.deg*v.dim)
-    lib.polyvec_get_coeffvec_i64(pvec, v.ptr)
+    for i in range(v.dim):
+        temp=poly_to_ar(v.get_elem(i))
+        for j in range(v.ring.deg):
+            pvec[v.ring.deg*i+j]=temp[j]
     return int64_to_type(pvec,v.ring.deg*v.dim,outtype)
 
 def list_automorphism(pol_coeffs:list):
@@ -319,10 +322,7 @@ class proof_statement:
             else:
                 print("Error")
         
-        if len(stat_list)==1 and type(stat_list[0]) is polyvec_t:
-            stat_vec=stat_list[0] # no copy needed — single polyvec already has the right layout
-        else:
-            stat_vec=polyvec_t(ring,stat_size,stat_list) # concatenation of all poly/polyvec in stat_list into one polyvec
+        stat_vec=polyvec_t(ring,stat_size,stat_list) # concatenation of all poly/polyvec in stat_list into one polyvec
         stat_ar=polyvec_to_ar(stat_vec) # convert polyvec to array
         right_ar=poly_to_ar(right_pol)
 

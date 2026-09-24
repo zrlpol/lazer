@@ -4,7 +4,6 @@
 #include <unordered_map>
 #include <memory>
 #include <utility>
-#include <immintrin.h>
 
 class NTTCache {
 public:

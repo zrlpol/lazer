@@ -1,4 +1,4 @@
 [submodule "src/labrados"]
 	path = src/labrados
-	url = https://github.com/lazer-crypto/labrador.git
+	url = https://github.com/zrlpol/labrador.git
 	branch = main
